@@ -3,55 +3,68 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const dotenv = require('dotenv')
 
-//환경변수 세팅
-dotenv.config({path: './.env'})
+module.exports = (env) => {
+    console.log(`env ${JSON.stringify(env.NODE_ENV)}`)
 
-module.exports = {
-    entry: {
-        main :"./src/client.js",
-    },
+    //환경변수를 통한 개발 상용 분리
+    if(env.NODE_ENV === 'development'){
+        dotenv.config({path: './dev.env'})
+    }else if(env.NODE_ENV === 'production'){
+        dotenv.config({path: './prod.env'})
+    }
 
-    devServer: {
-        hot : true,
-        port : "9000",
-    },
+    const isDevelopment = process.env.NODE_ENV === "development";
 
-    output: {
-        path: path.resolve(__dirname, "build"), //required absolute path
-        filename: "[name].bundle.js"
-    },
-    module: {
-        //모듈 관련 설정
-        rules: [
-            //모듈 설정 규칙 (로더설정, 파서옵션 등)
-            {
+    console.log(`dev? ${isDevelopment}`)
 
-            }
-        ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: "public/template/index.ejs",
+    return {
+        mode: isDevelopment ? "development" : "production",
+        entry: {
+            main :"./src/client.js",
+        },
 
-            // minify: true,
+        devServer: {
+            hot : true,
+            port : "9000",
+        },
 
-            meta: {
-                'description': 'To Do List'
-            },
+        output: {
+            path: isDevelopment ? path.resolve(__dirname, "buildDev") : path.resolve(__dirname, "build"), //required absolute path
+            filename: "[name].bundle.js"
+        },
+        module: {
+            //모듈 관련 설정
+            rules: [
+                //모듈 설정 규칙 (로더설정, 파서옵션 등)
+                {
 
-            //사용자 정의 옵션(index.ejs 파일에 넘겨줌)
-            templateParameters: {
-                lang : "ko",
-                title : "To Do"
-            }
-        }),
-
-        new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: [
-                '**/*',
-                //clean build folder
-                path.resolve(__dirname, 'build/**/*')
+                }
             ]
-        })
-    ]
+        },
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: "public/template/index.ejs",
+
+                // minify: true,
+
+                meta: {
+                    'description': 'To Do List'
+                },
+
+                //사용자 정의 옵션(index.ejs 파일에 넘겨줌)
+                templateParameters: {
+                    lang : "ko",
+                    title : "To Do"
+                }
+            }),
+
+            new CleanWebpackPlugin({
+                cleanOnceBeforeBuildPatterns: [
+                    '**/*',
+                    //clean build folder
+                    path.resolve(__dirname, 'build/**/*')
+                ]
+            })
+        ]
+    }
 }
