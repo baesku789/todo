@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const dotenv = require('dotenv')
 
 module.exports = (env) => {
-    console.log(`env ${JSON.stringify(env.NODE_ENV)}`)
+    console.log(env.NODE_ENV)
 
     //환경변수를 통한 개발 상용 분리
     if(env.NODE_ENV === 'development'){
@@ -62,7 +62,7 @@ module.exports = (env) => {
                 cleanOnceBeforeBuildPatterns: [
                     '**/*',
                     //clean build folder
-                    path.resolve(__dirname, 'build/**/*')
+                    isDevelopment ? path.resolve(__dirname, 'buildDev/**/*') : path.resolve(__dirname, 'build/**/*')
                 ]
             })
         ]
