@@ -4,8 +4,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const dotenv = require('dotenv')
 
 module.exports = (env) => {
-    console.log(env.NODE_ENV)
-
     //환경변수를 통한 개발 상용 분리
     if(env.NODE_ENV === 'development'){
         dotenv.config({path: './dev.env'})
@@ -14,8 +12,6 @@ module.exports = (env) => {
     }
 
     const isDevelopment = process.env.NODE_ENV === "development";
-
-    console.log(`dev? ${isDevelopment}`)
 
     return {
         mode: isDevelopment ? "development" : "production",
@@ -35,9 +31,16 @@ module.exports = (env) => {
         module: {
             //모듈 관련 설정
             rules: [
-                //모듈 설정 규칙 (로더설정, 파서옵션 등)
+                // Babel 파일 로더 설정
                 {
-
+                    test: /\.m?js$/i,
+                    exclude: /node_modules/,
+                    use: {
+                        loader:'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env']
+                        }
+                    }
                 }
             ]
         },
