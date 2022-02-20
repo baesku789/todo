@@ -31,6 +31,7 @@ module.exports = (env) => {
         devServer: {
             hot : true,
             port : "9000",
+            historyApiFallback : true // 404 발생시 index.html반환
         },
 
         output: {

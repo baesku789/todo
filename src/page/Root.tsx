@@ -1,11 +1,16 @@
 import * as React from "react";
-import {Home} from "./components/Home";
+import {Home} from "./components/home/Home";
+import {Routes, Route} from "react-router-dom";
+import {Post} from "./components/post/Post";
+import Todo from "./components/todo/Todo";
 
 export const Root = () => {
-    const name = "yechan";
-    const age = 25
 
     return (
-        <Home name={name} age={age}/>
+        <Routes>
+            <Route path={'/'} element={<Home/>}/>
+            <Route path={'/todo'} element={<Todo/>}/>
+            <Route path={'/post'} element={<Post/>}/>
+        </Routes>
     )
 }
