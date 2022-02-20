@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const dotenv = require('dotenv')
 
 module.exports = (env) => {
@@ -44,7 +45,7 @@ module.exports = (env) => {
                     use: {
                         loader:'babel-loader',
                         options: {
-                            presets: ['@babel/preset-env', '@babel/preset-react', "@babel/preset-typescript"]
+                            presets: ['@babel/preset-env', '@babel/preset-react']
                         }
                     }
                 },
@@ -66,9 +67,17 @@ module.exports = (env) => {
                     exclude: /node_modules/,
                     use: [
                         // Creates `style` nodes from JS strings
-                        isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
+                        isDevelopment ? MiniCssExtractPlugin.loader : "style-loader",
                         // Translates CSS into CommonJS
-                        "css-loader",
+                        {
+                            loader: "css-loader",
+                            options: {
+                                modules :{
+                                    //css module
+                                    localIdentName: isDevelopment ? "[path][name]__[local]" : "[hash:base64]"
+                                }
+                            }
+                        },
                         // Compiles Sass to CSS
                         "sass-loader",
                     ],
@@ -101,7 +110,11 @@ module.exports = (env) => {
                 ]
             }),
 
-            new MiniCssExtractPlugin()
+            new MiniCssExtractPlugin(),
+            new ForkTsCheckerWebpackPlugin({
+                async : false,
+                devServer : isDevelopment,
+            })
         ],
     }
 }
