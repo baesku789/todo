@@ -5,7 +5,7 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "declaration": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
   },
   "exclude": [
     "node_modules"

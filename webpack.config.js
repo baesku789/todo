@@ -18,6 +18,8 @@ module.exports = (env) => {
     return {
         mode: isDevelopment ? "development" : "production",
 
+        devtool: isDevelopment && 'eval', //source map 생성
+
         resolve: {
             extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss']
         },
