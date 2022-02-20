@@ -1,10 +1,8 @@
-import React from "react";
-import Root from "./page/Root";
+import * as React from "react";
+import {Root} from "./page/Root";
 
-const App = () => {
+export const App = () => {
     return (
         <Root/>
     )
 }
-
-export default App;

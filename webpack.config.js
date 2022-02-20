@@ -22,7 +22,7 @@ module.exports = (env) => {
         },
 
         entry: {
-            main :"./src/client.ts",
+            main :"./src/client.tsx",
         },
 
         devServer: {
@@ -63,6 +63,7 @@ module.exports = (env) => {
                 // SCSS 파일 로더 설정
                 {
                     test: /\.s[ac]ss$/i,
+                    exclude: /node_modules/,
                     use: [
                         // Creates `style` nodes from JS strings
                         isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
@@ -71,12 +72,6 @@ module.exports = (env) => {
                         // Compiles Sass to CSS
                         "sass-loader",
                     ],
-                },
-                // 모든 '.js' 출력 파일은 'source-map-loader'에서 다시 처리한 소스 맵이 있습니다.
-                {
-                    enforce: "pre",
-                    test: /\.js$/,
-                    loader: "source-map-loader"
                 },
             ]
         },
@@ -101,20 +96,12 @@ module.exports = (env) => {
                 cleanOnceBeforeBuildPatterns: [
                     '**/*',
                     //clean build folder
-                    isDevelopment ? path.resolve(__dirname, 'buildDev/**/*') : path.resolve(__dirname, 'build/**/*')
+                    path.resolve(__dirname, 'buildDev/**/*'),
+                    path.resolve(__dirname, 'build/**/*')
                 ]
             }),
 
             new MiniCssExtractPlugin()
         ],
-
-        // 경로가 다음 중 하나와 일치하는 모듈을 가져올 때,
-        // 해당 전역 변수가 있다고 가정하고 사용합니다.
-        // 브라우저가 빌드간에 라이브러리를 캐시 할 수 있도록
-        // 모든 의존성을 묶지 않아도 되기 때문에 중요합니다.
-        externals: {
-            "react": "React",
-            "react-dom": "ReactDOM"
-        }
     }
 }

@@ -1,9 +1,8 @@
-import React from "react";
-import styles from './home.scss'
+import * as React from "react";
+// import styles from './home.scss'
 
-const Home = () => {
+export const Home = () => {
     return (
-        <div className={styles.home}>Home</div>
+        <div >Home</div>
     )
 }
-export default Home;

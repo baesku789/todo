@@ -1,9 +1,8 @@
-import React from "react";
-import Home from "./components/Home";
+import * as React from "react";
+import {Home} from "./components/Home";
 
-const Root = () => {
+export const Root = () => {
     return (
         <Home/>
     )
 }
-export default Root;
