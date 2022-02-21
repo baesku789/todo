@@ -1,0 +1,31 @@
+@use 'src/css/common' as Common;
+@use 'src/css/color' as Color;
+
+.container{
+  width: 60%;
+  height: 70%;
+  background: Color.$bg;
+  margin: 0 auto;
+
+  .header{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .scrollBox{
+    overflow: auto;
+    overflow-x: hidden;
+    height: 600px;
+    background: #ffffff;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+
+    .todoList{
+      background: Color.$bg;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}

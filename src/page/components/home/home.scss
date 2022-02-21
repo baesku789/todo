@@ -1,3 +1,15 @@
-.home{
+@use 'src/css/common' as Common;
+@use 'src/css/color' as Color;
 
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin: 30px auto 0;
+  padding: 20px 15px 30px;
+  background: Color.$bg;
+  .input{
+    width: calc(100% - 20px);
+    height: 30px;
+  }
 }

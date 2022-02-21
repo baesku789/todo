@@ -36,7 +36,8 @@ module.exports = (env) => {
 
         output: {
             path: isDevelopment ? path.resolve(__dirname, "buildDev") : path.resolve(__dirname, "build"), //required absolute path
-            filename: "[name].bundle.js"
+            filename: "[name].bundle.js",
+            assetModuleFilename: "'images/[name][ext]"
         },
         module: {
             //모듈 관련 설정
@@ -85,6 +86,10 @@ module.exports = (env) => {
                         "sass-loader",
                     ],
                 },
+                {
+                    test:/\.png/,
+                    type: "asset/resource"
+                }
             ]
         },
         plugins: [
