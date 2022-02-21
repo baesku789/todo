@@ -1,5 +1,6 @@
 import * as React from "react";
 import styles from './todo.scss'
+import {Link} from "react-router-dom";
 
 const Todo = () => {
     const todoList = [
@@ -30,10 +31,21 @@ const Todo = () => {
                 {
                     todoList.map((todo) => {
                       return (
-                          <div className={styles.todoList} key={todo.title}>{todo.title}</div>
+                          <div
+                              className={styles.todoList}
+                              key={todo.title}
+                          >
+                              {todo.title}
+                          </div>
                       )
                     })
                 }
+                <div className={styles.plus_circle}>
+                    <Link to={'/post'}
+                    ></Link>
+                    <div className={styles.plus_1}></div>
+                    <div className={styles.plus_2}></div>
+                </div>
             </div>
         </div>
     )
