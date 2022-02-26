@@ -1,25 +1,22 @@
 import * as React from "react";
 import styles from './todo.scss'
-import {Link} from "react-router-dom";
+import {useState} from "react";
+import {v4 as uuidv4} from 'uuid'
+
+interface todoState {
+    id: string
+    text: string,
+    date : number
+}
 
 const Todo = () => {
-    const todoList = [
-        {
-            name: "yechan",
-            title : "할일 1",
-            text: "자기 전에 영양제1 챙겨먹기"
-        },
-        {
-            name: "yechan",
-            title : "할일 2",
-            text: "자기 전에 영양제2 챙겨먹기"
-        },
-        {
-            name: "yechan",
-            title : "할일 3",
-            text: "자기 전에 영양제3 챙겨먹기"
-        }
-    ]
+    const [todoList, setTodoList] = useState<todoState[]>([]);
+
+    const date = new Date();
+
+    const addTodo = (text: string) => {
+        setTodoList(state => [...state, {text : text, date: date.getDate(), id: uuidv4()}])
+    }
 
     return (
         <div className={styles.container}>
@@ -33,21 +30,21 @@ const Todo = () => {
                       return (
                           <div
                               className={styles.todoList}
-                              key={todo.title}
+                              key={todo?.id}
                           >
-                              {todo.title}
+                              <div>{todo?.text}</div>
+                              <div>{todo?.date}</div>
                           </div>
                       )
                     })
                 }
-                <div className={styles.plus_circle}>
-                    <Link to={'/post'}
-                    ></Link>
-                    <div className={styles.plus_1}></div>
-                    <div className={styles.plus_2}></div>
+                <div className={styles.plus_circle} onClick={() => addTodo("aa")}>
+                    <div className={styles.plus_1}/>
+                    <div className={styles.plus_2}/>
                 </div>
             </div>
         </div>
     )
 }
+
 export default Todo;

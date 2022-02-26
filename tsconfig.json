@@ -6,8 +6,12 @@
     "strictNullChecks": true, //null check
     "declaration": true, //d.ts file 생성(type 정의되어 있음)
     "emitDeclarationOnly": true, //d.ts file만 방출
+    "baseUrl": "./",
+    "paths": { //절대 경로 설정
+      "@Components/*" : ["src/page/components/*"],
+    }
   },
   "exclude": [
     "node_modules"
-  ]
+  ],
 }

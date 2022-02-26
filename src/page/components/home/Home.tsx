@@ -1,8 +1,7 @@
 import * as React from "react";
 import styles from './home.scss'
 
-
-export const Home = () => {
+const Home = () => {
 
     return (
         <div className={styles.container}>
@@ -14,3 +13,5 @@ export const Home = () => {
         </div>
     )
 }
+
+export default Home;

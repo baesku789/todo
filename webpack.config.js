@@ -21,7 +21,11 @@ module.exports = (env) => {
         devtool: isDevelopment && 'eval', //source map 생성
 
         resolve: {
-            extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss']
+            extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss'],
+            modules: [path.resolve(__dirname,'/src'), 'node_modules'],
+            alias: {
+                "@Components" : path.resolve(__dirname, 'src/page/components')
+            }
         },
 
         entry: {
@@ -78,7 +82,7 @@ module.exports = (env) => {
                             options: {
                                 modules :{
                                     //css module
-                                    localIdentName: isDevelopment ? "[path][name]__[local]" : "[hash:base64]"
+                                    localIdentName: isDevelopment ? "[name]__[local]__[hash:base64:5]" : "[hash:base64]"
                                 }
                             }
                         },
@@ -96,8 +100,9 @@ module.exports = (env) => {
             new HtmlWebpackPlugin({
                 template: "public/template/index.ejs",
 
-                // minify: true,
+                minify: !isDevelopment && true,
 
+                //정적인 값은 여기서 설정 나머지 ejs 파일로
                 meta: {
                     'description': 'To Do List'
                 },
