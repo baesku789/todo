@@ -2,16 +2,30 @@ import * as React from "react";
 import styles from './todo.scss'
 import {useState} from "react";
 import {v4 as uuidv4} from 'uuid'
+import cn from 'classnames'
 
 interface todoState {
-    id: string
+    id: string,
     text: string,
     date : string,
     done : boolean
 }
 
 const Todo = () => {
-    const [todoList, setTodoList] = useState<todoState[]>([]);
+    const [todoList, setTodoList] = useState<todoState[]>([
+        {
+            id: uuidv4(),
+            text: "영양제 먹기",
+            date : "2/27",
+            done : false
+        },
+        {
+            id: uuidv4(),
+            text: "세수하기",
+            date : "2/27",
+            done : false
+        }
+    ]);
     const [text, setText] = useState("");
 
     const date = new Date();
@@ -27,6 +41,14 @@ const Todo = () => {
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value} = e.target;
         setText(value)
+    }
+
+    const onToggle = (id : string) => {
+        setTodoList(
+            todoList.map((todo) => (
+                todo.id === id ? {...todo, done: !todo.done} : todo
+            ))
+        )
     }
 
     return (
@@ -50,17 +72,17 @@ const Todo = () => {
                           <div
                               className={styles.todoList}
                               key={todo?.id}
+                              onClick={() => onToggle(todo?.id)}
                           >
                               <div>{todo.text}</div>
-                              <div className={styles.date}>{todo?.date}</div>
+                              <div className={cn(styles.check_box, todo.done && styles.done)}>
+                                  <div className={styles.check1}/>
+                                  <div className={styles.check2}/>
+                              </div>
                           </div>
                       )
                     })
                 }
-                {/*<div className={cn(styles.plus_circle, inputDisplay && styles.x_btn)} onClick={() => setInputDisplay(!inputDisplay)}>*/}
-                {/*    <div className={styles.plus_1}/>*/}
-                {/*    <div className={styles.plus_2}/>*/}
-                {/*</div>*/}
             </div>
         </div>
     )
