@@ -23,6 +23,8 @@ module.exports = (env) => {
         resolve: {
             extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss'],
             modules: [path.resolve(__dirname,'/src'), 'node_modules'],
+
+            //절대 경로 설정
             alias: {
                 "@Components" : path.resolve(__dirname, 'src/page/components')
             }
@@ -35,7 +37,7 @@ module.exports = (env) => {
         devServer: {
             hot : true,
             port : "9000",
-            historyApiFallback : true // 404 발생시 index.html반환
+            historyApiFallback : true // 404 발생시 index.html 반환
         },
 
         output: {

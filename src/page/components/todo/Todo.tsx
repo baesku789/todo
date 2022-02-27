@@ -3,6 +3,7 @@ import styles from './todo.scss'
 import {useState} from "react";
 import {v4 as uuidv4} from 'uuid'
 import cn from 'classnames'
+import {touchStart, touchEnd} from "../../../common/hooks/longClick";
 
 interface todoState {
     id: string,
@@ -27,13 +28,22 @@ const Todo = () => {
         }
     ]);
     const [text, setText] = useState("");
+    const [isLongClick, setIsLongClick] = useState(false);
+
+    console.log(`long click ${isLongClick}`)
 
     const date = new Date();
     const getMonthDay = `${date.getMonth() + 1}/${date.getDate()}`
 
     const addTodo = (e: React.KeyboardEvent<HTMLInputElement>) : void => {
         if(e.key === "Enter"){
-            setTodoList(state => [...state, {id: uuidv4(), text: text, date: getMonthDay, done: false}])
+            const todo = {
+                id: uuidv4(),
+                text: text,
+                date: getMonthDay,
+                done: false
+            }
+            setTodoList(state => [...state, todo])
             setText("")
         }
     }
@@ -51,13 +61,21 @@ const Todo = () => {
         )
     }
 
+    const onRemove = (e: React.MouseEvent, id: string) => {
+        e.stopPropagation();
+        if(isLongClick){
+            console.log(`todo ${JSON.stringify(todoList)}`)
+            setTodoList(todoList.filter((todo) => todo.id !== id))
+        }
+
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1>To Do List</h1>
+                <h1 style={{"marginTop": "0"}}>To Do List</h1>
             </div>
-
-            <div className={styles.scrollBox}>
+            <div className={styles.scrollBox} onClick={() => setIsLongClick(false)}>
                 <input
                     className={styles.input}
                     type="text"
@@ -73,9 +91,14 @@ const Todo = () => {
                               className={styles.todoList}
                               key={todo?.id}
                               onClick={() => onToggle(todo?.id)}
+                              onTouchStart={() => touchStart()}
+                              onTouchEnd={() => touchEnd(setIsLongClick)}
                           >
                               <div>{todo.text}</div>
-                              <div className={cn(styles.check_box, todo.done && styles.done)}>
+                              <div
+                                  className={cn(styles.check_box, todo.done && styles.done, isLongClick && styles.remove)}
+                                  onClick={(e) => onRemove(e, todo.id)}
+                              >
                                   <div className={styles.check1}/>
                                   <div className={styles.check2}/>
                               </div>

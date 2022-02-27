@@ -31,7 +31,7 @@
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 1px 1px 20px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 
     .check_box{
       border-radius: 50%;
@@ -59,7 +59,11 @@
     }
 
     .done{
-      background: lawngreen;
+      background: lightgreen;
+    }
+
+    .remove{
+      background: red;
     }
 
     .date{
