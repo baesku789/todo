@@ -15,16 +15,27 @@
   background: #ffffff;
   border-radius: 5px;
   border: 1px solid lightgrey;
+  padding: 10px;
+
+  .input{
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    width: 100%;
+    margin-bottom: 5px;
+  }
 
   .todoList{
-    display: flex;
-    justify-content: space-between;
+    @include Common.flex-spaceBt-center;
     background: Color.$bg;
-    margin: 10px;
+    margin: 10px 0;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
     box-shadow: 1px 1px 20px 5px rgba(0, 0, 0, 0.2);
+
+    .date{
+      font-size: 13px;
+    }
   }
 
   .plus_circle{
@@ -50,5 +61,8 @@
       transform: rotate(90deg);
       border-top: 3px solid black;
     }
+  }
+  .x_btn{
+    transform: rotate(45deg);
   }
 }

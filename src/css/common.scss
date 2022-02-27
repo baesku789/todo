@@ -29,7 +29,13 @@
   align-items: center;
   flex-direction: column;
 }
+@mixin flex-spaceBt-center{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+//common container
 @mixin container{
   .container {
     width: 100%;
