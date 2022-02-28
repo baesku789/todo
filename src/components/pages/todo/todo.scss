@@ -3,6 +3,33 @@
 
 @include Common.container;
 
+
+@mixin btn-style($color){
+  border-radius: 50%;
+  background: $color;
+  width: 20px;
+  height: 20px;
+  position: relative;
+}
+
+@mixin check-btn-style($width, $top, $left, $deg){
+  border-top: 2px solid white;
+  width: $width;
+  position: absolute;
+  top: $top;
+  left: $left;
+  transform: rotate($deg);
+}
+
+@mixin x-btn-style($width, $deg, $top,$left){
+  position: absolute;
+  width: $width;
+  transform: rotate($deg);
+  border-top: 2px solid white;
+  top: $top;
+  left: $left;
+}
+
 .header{
   display: flex;
   justify-content: space-between;
@@ -33,28 +60,25 @@
     cursor: pointer;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 
+    .x_btn_box{
+      @include btn-style(red);
+
+      .x_btn1{
+        @include x-btn-style(10px, 45deg, 8.5px, 5.5px)
+      }
+      .x_btn2{
+        @include x-btn-style(10px, 135deg, 8.5px, 5.5px)
+      }
+    }
+
     .check_box{
-      border-radius: 50%;
-      background: lightgrey;
-      width: 20px;
-      height: 20px;
-      position: relative;
+      @include btn-style(lightgrey);
 
       .check1{
-        border-top: 2px solid white;
-        width: 6px;
-        position: absolute;
-        top: 10px;
-        left: 4px;
-        transform: rotate(45deg);
+        @include check-btn-style(6px, 10px, 4px, 45deg)
       }
       .check2{
-        border-top: 2px solid white;
-        position: absolute;
-        width: 10px;
-        top: 10px;
-        left: 7.5px;
-        transform: rotate(135deg);
+        @include check-btn-style(10px, 10px, 7.5px, 135deg)
       }
     }
 

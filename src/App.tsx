@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Root} from "./page/Root";
+import {Root} from "./components/Root";
 import {BrowserRouter} from "react-router-dom";
 import {createGlobalStyle} from "styled-components";
 
@@ -11,6 +11,7 @@ export const App = () => {
       body{
         margin: 0;
         height: 100vh;
+        font-size: 13px;
       }
       #root{
         height: 100%

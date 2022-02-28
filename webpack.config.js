@@ -26,7 +26,7 @@ module.exports = (env) => {
 
             //절대 경로 설정
             alias: {
-                "@Components" : path.resolve(__dirname, 'src/page/components')
+                "@Components" : path.resolve(__dirname, 'src/components/pages')
             }
         },
 

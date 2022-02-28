@@ -1,49 +1,23 @@
 import * as React from "react";
 import styles from './todo.scss'
 import {useState} from "react";
-import {v4 as uuidv4} from 'uuid'
 import cn from 'classnames'
 import {touchStart, touchEnd} from "../../../common/hooks/longClick";
-
-interface todoState {
-    id: string,
-    text: string,
-    date : string,
-    done : boolean
-}
+import {getFormattedToday} from "../../../common/utils/date";
+import {useDispatch, useSelector} from "react-redux";
+import {create, remove, toggle} from "../../../redux/todo";
+import {RootState} from "../../../redux";
 
 const Todo = () => {
-    const [todoList, setTodoList] = useState<todoState[]>([
-        {
-            id: uuidv4(),
-            text: "영양제 먹기",
-            date : "2/27",
-            done : false
-        },
-        {
-            id: uuidv4(),
-            text: "세수하기",
-            date : "2/27",
-            done : false
-        }
-    ]);
     const [text, setText] = useState("");
     const [isLongClick, setIsLongClick] = useState(false);
+    const dispatch = useDispatch();
 
-    console.log(`long click ${isLongClick}`)
-
-    const date = new Date();
-    const getMonthDay = `${date.getMonth() + 1}/${date.getDate()}`
+    const todoList = useSelector((state: RootState) => state.todo)
 
     const addTodo = (e: React.KeyboardEvent<HTMLInputElement>) : void => {
         if(e.key === "Enter"){
-            const todo = {
-                id: uuidv4(),
-                text: text,
-                date: getMonthDay,
-                done: false
-            }
-            setTodoList(state => [...state, todo])
+            dispatch(create(text))
             setText("")
         }
     }
@@ -54,18 +28,13 @@ const Todo = () => {
     }
 
     const onToggle = (id : string) => {
-        setTodoList(
-            todoList.map((todo) => (
-                todo.id === id ? {...todo, done: !todo.done} : todo
-            ))
-        )
+        dispatch(toggle(id))
     }
 
     const onRemove = (e: React.MouseEvent, id: string) => {
         e.stopPropagation();
         if(isLongClick){
-            console.log(`todo ${JSON.stringify(todoList)}`)
-            setTodoList(todoList.filter((todo) => todo.id !== id))
+            dispatch(remove(id))
         }
 
     }
@@ -73,7 +42,10 @@ const Todo = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1 style={{"marginTop": "0"}}>To Do List</h1>
+                <h1 style={{"margin": "0"}}>To Do List</h1>
+            </div>
+            <div>
+                <h2 className={styles.today}>{getFormattedToday()}</h2>
             </div>
             <div className={styles.scrollBox} onClick={() => setIsLongClick(false)}>
                 <input
@@ -95,13 +67,21 @@ const Todo = () => {
                               onTouchEnd={() => touchEnd(setIsLongClick)}
                           >
                               <div>{todo.text}</div>
-                              <div
-                                  className={cn(styles.check_box, todo.done && styles.done, isLongClick && styles.remove)}
-                                  onClick={(e) => onRemove(e, todo.id)}
-                              >
-                                  <div className={styles.check1}/>
-                                  <div className={styles.check2}/>
-                              </div>
+                              {
+                                  isLongClick ?
+                                      <div
+                                          className={styles.x_btn_box}
+                                          onClick={(e) => onRemove(e, todo.id)}
+                                      >
+                                          <div className={styles.x_btn1}/>
+                                          <div className={styles.x_btn2}/>
+                                      </div>
+                                      :
+                                      <div className={cn(styles.check_box, todo.done && styles.done)}>
+                                          <div className={styles.check1}/>
+                                          <div className={styles.check2}/>
+                                      </div>
+                              }
                           </div>
                       )
                     })

@@ -8,8 +8,8 @@
     "emitDeclarationOnly": true, //d.ts file만 방출
     "baseUrl": "./",
     "paths": { //절대 경로 설정
-      "@Components/*" : ["src/page/components/*"],
-    }
+      "@Components/*" : ["src/components/pages/*"],
+    },
   },
   "exclude": [
     "node_modules"
