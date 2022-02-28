@@ -8,9 +8,7 @@ const REMOVE = 'redux/REMOVE' as const;
 //액션 생성 함수 선언
 export const create = (text: string) => ({
     type: CREATE,
-    payload: {
-        text,
-    }
+    payload: text
 })
 
 export const toggle = (id: string) => ({
@@ -54,7 +52,7 @@ function todo(
         case "redux/CREATE":
             return state.concat({
                 id: uuidv4(),
-                text: action.payload.text,
+                text: action.payload,
                 done: false
             });
         case "redux/TOGGLE":
