@@ -1,19 +1,19 @@
 import * as React from "react";
-import styles from './todo.scss'
 import {useState} from "react";
-import cn from 'classnames'
-import {touchStart, touchEnd} from "../../../common/hooks/longClick";
+import styles from './todo.scss'
 import {getFormattedToday} from "../../../common/utils/date";
 import {useDispatch, useSelector} from "react-redux";
 import {create, remove, toggle} from "../../../redux/todo";
 import {RootState} from "../../../redux";
+import TodoList from "@Components/todo/TodoList";
+import TodoAdd from "@Components/todo/TodoAdd";
 
 const Todo = () => {
     const [text, setText] = useState("");
-    const [isLongClick, setIsLongClick] = useState(false);
+    const [isLongClick, setIsLongClick] = useState(false); //1초 이상 클릭 후
     const dispatch = useDispatch();
 
-    const todoList = useSelector((state: RootState) => state.todo)
+    const todos = useSelector((state: RootState) => state.todos)
 
     const addTodo = (e: React.KeyboardEvent<HTMLInputElement>) : void => {
         if(e.key === "Enter"){
@@ -22,7 +22,7 @@ const Todo = () => {
         }
     }
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) : void => {
         const {value} = e.target;
         setText(value)
     }
@@ -31,7 +31,7 @@ const Todo = () => {
         dispatch(toggle(id))
     }
 
-    const onRemove = (e: React.MouseEvent, id: string) => {
+    const onRemove = (e: React.MouseEvent, id: string) : void => {
         e.stopPropagation();
         if(isLongClick){
             dispatch(remove(id))
@@ -48,44 +48,14 @@ const Todo = () => {
                 <h2 className={styles.today}>{getFormattedToday()}</h2>
             </div>
             <div className={styles.scrollBox} onClick={() => setIsLongClick(false)}>
-                <input
-                    className={styles.input}
-                    type="text"
-                    value={text}
-                    placeholder={"할 일을 입력하세요."}
-                    onKeyPress={(e) => addTodo(e)}
-                    onChange={e => onChange(e)}
+                <TodoAdd text={text} onChange={onChange} addTodo={addTodo}/>
+                <TodoList
+                    todos={todos}
+                    onToggle={onToggle}
+                    onRemove={onRemove}
+                    isLongClick={isLongClick}
+                    setIsLongClick={setIsLongClick}
                 />
-                {
-                    todoList.map((todo) => {
-                      return (
-                          <div
-                              className={styles.todoList}
-                              key={todo?.id}
-                              onClick={() => onToggle(todo?.id)}
-                              onTouchStart={() => touchStart()}
-                              onTouchEnd={() => touchEnd(setIsLongClick)}
-                          >
-                              <div>{todo.text}</div>
-                              {
-                                  isLongClick ?
-                                      <div
-                                          className={styles.x_btn_box}
-                                          onClick={(e) => onRemove(e, todo.id)}
-                                      >
-                                          <div className={styles.x_btn1}/>
-                                          <div className={styles.x_btn2}/>
-                                      </div>
-                                      :
-                                      <div className={cn(styles.check_box, todo.done && styles.done)}>
-                                          <div className={styles.check1}/>
-                                          <div className={styles.check2}/>
-                                      </div>
-                              }
-                          </div>
-                      )
-                    })
-                }
             </div>
         </div>
     )

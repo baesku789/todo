@@ -16,7 +16,7 @@ const actions = {
 // ReturnType<typeof _____> 는 특정 함수의 반환값을 추론
 type TodoAction  = ActionType<typeof actions>
 
-type Todo = {
+export type Todo = {
     id: string,
     text: string,
     done : boolean
