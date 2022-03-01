@@ -1,13 +1,24 @@
 import * as React from "react";
 import styles from "@Components/todo/todo.scss";
+import {useState} from "react";
+import {create} from "../../../redux/todo";
+import {useDispatch} from "react-redux";
 
-type TodoAddProps = {
-    text: string,
-    onChange : (e: React.ChangeEvent<HTMLInputElement>) => void,
-    addTodo : (e: React.KeyboardEvent<HTMLInputElement>) => void
-}
+const TodoAdd = () => {
+    const [text, setText] = useState("");
+    const dispatch = useDispatch()
 
-const TodoAdd = ({text, onChange, addTodo} : TodoAddProps) => {
+    const addTodo = (e: React.KeyboardEvent<HTMLInputElement>) : void => {
+        if(e.key === "Enter"){
+            dispatch(create(text))
+            setText("")
+        }
+    }
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) : void => {
+        const {value} = e.target;
+        setText(value)
+    }
 
     return (
         <input
