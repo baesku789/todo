@@ -64,10 +64,10 @@
       @include btn-style(red);
 
       .x_btn1{
-        @include x-btn-style(10px, 45deg, 8.5px, 5.5px)
+        @include x-btn-style(10px, 45deg, 9px, 5.5px)
       }
       .x_btn2{
-        @include x-btn-style(10px, 135deg, 8.5px, 5.5px)
+        @include x-btn-style(10px, 135deg, 9px, 5.5px)
       }
     }
 

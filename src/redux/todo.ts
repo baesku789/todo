@@ -7,13 +7,13 @@ export const toggle = createAction('redux/TOGGLE')<string>();
 export const remove = createAction('redux/REMOVE')<string>();
 
 //모든 액션 객체들에 대한 타입을 준비
-// ReturnType<typeof _____> 는 특정 함수의 반환값을 추론
 const actions = {
     create,
     toggle,
     remove
 }
 
+// ReturnType<typeof _____> 는 특정 함수의 반환값을 추론
 type TodoAction  = ActionType<typeof actions>
 
 type Todo = {
