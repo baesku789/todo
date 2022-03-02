@@ -2,17 +2,19 @@ import * as React from "react";
 import styles from "@Components/todo/todo.scss";
 import {touchEnd, touchStart} from "../../../common/hooks/longClick";
 import cn from "classnames";
-import {Todo} from "../../../redux/todo";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../redux";
 
 type TodoListProps = {
-    todos : Todo[],
     onToggle: (id:string) => void,
     onRemove : (e: React.MouseEvent, id:string) => void,
     isLongClick : boolean,
     setIsLongClick : any
 }
 
-const TodoList = ({todos, onToggle, onRemove, isLongClick, setIsLongClick}: TodoListProps) => {
+const TodoList = ({onToggle, onRemove, isLongClick, setIsLongClick}: TodoListProps) => {
+    const todos = useSelector((state: RootState) => state.todos)
+
     return(
         <>
             {

@@ -1,7 +1,17 @@
 import * as React from "react";
 import styles from './home.scss'
+import {useEffect} from "react";
 
 const Home = () => {
+    useEffect(() => {
+        const getBody = async () => {
+            const response = await fetch( '/users');
+            const body = await response.text();
+            console.log(`body ${body}`)
+        }
+
+        getBody();
+    },[])
 
     return (
         <div className={styles.container}>
