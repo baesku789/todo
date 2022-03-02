@@ -1,7 +1,9 @@
-./dev.env
-./prod.env
+.idea/
 
-./build
-./buildDev
+dev.env
+prod.env
+
+build/
+buildDev/
 
 node_modules
