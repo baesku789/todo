@@ -2,15 +2,16 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'); //type check
 const dotenv = require('dotenv')
+const webpack = require('webpack')
 
-module.exports = (env) => {
+module.exports = () => {
     //환경변수를 통한 개발 상용 분리
-    if(env.NODE_ENV === 'development'){
-        dotenv.config({path: './dev.env'})
-    }else if(env.NODE_ENV === 'production'){
-        dotenv.config({path: './prod.env'})
+    if(process.env.NODE_ENV === 'development'){
+        dotenv.config({path:'./dev.env'})
+    }else if(process.env.NODE_ENV === 'production'){
+        dotenv.config({path: 'prod.env'})
     }
 
     const isDevelopment = process.env.NODE_ENV === "development";
@@ -66,7 +67,7 @@ module.exports = (env) => {
                     use: {
                         loader: "ts-loader",
                         options: {
-                            //성능 향상
+                            //ts를 js로 바꾸어주는 것만 수행 => 성능 향상
                             transpileOnly : true
                         }
                     }
@@ -128,7 +129,10 @@ module.exports = (env) => {
             new MiniCssExtractPlugin(),
             new ForkTsCheckerWebpackPlugin({
                 async : false,
-                devServer : isDevelopment,
+                devServer : isDevelopment, //webpack dev server에 오류 표시
+            }),
+            new webpack.DefinePlugin({
+                SERVER_DOMAIN : JSON.stringify(process.env.SERVER_DOMAIN)
             })
         ],
     }
