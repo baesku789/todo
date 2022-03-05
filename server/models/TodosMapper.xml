@@ -5,10 +5,7 @@
 <mapper namespace="com.atoz_develop.spms.dao.ProjectDao">
     <select id="selectTodosList">
         SELECT
-          id
-          , text
-          , done
-          , date
+          *
         FROM react.todos
         ORDER BY id
     </select>

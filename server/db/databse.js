@@ -1,7 +1,7 @@
 const mysql = require('mysql')
 const config = require('../config/config')
 const express = require('express')
-const router = express.Router
+const router = express.Router()
 
 // my sql 접속 정보
 const pool = mysql.createPool({
