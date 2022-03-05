@@ -4,12 +4,13 @@ const http = require('http');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const config = require('./config/config')
 
 const app = express();
 
 //proxy 설정
 app.use(function (req, res, next){
-  res.setHeader("Access-Control-Allow-Origin", 'http://localhost:9000')
+  res.setHeader("Access-Control-Allow-Origin", config.SERVER_DOMAIN)
   next()
 })
 app.use('/', indexRouter);

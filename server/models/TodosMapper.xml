@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atoz_develop.spms.dao.ProjectDao">
+    <select id="selectTodosList">
+        SELECT
+          id
+          , text
+          , done
+          , date
+        FROM react.todos
+        ORDER BY id
+    </select>
+</mapper>
