@@ -6,14 +6,9 @@ const axiosConfig: AxiosInstance = axios.create({
 })
 
 const FrontApi = {
-    getBody : async () => {
-        const response = await axiosConfig.get('/')
-        return response.data
-    },
-
     getTodos : async () => {
-        const response = await axiosConfig.get('/todos')
-        return response.data
+        const response = await axiosConfig.post('/todos?type=list')
+        return response.data.json
     }
 }
 
