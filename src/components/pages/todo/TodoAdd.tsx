@@ -1,8 +1,8 @@
 import * as React from "react";
 import styles from "@Components/todo/todo.scss";
 import {useState} from "react";
-import {create} from "../../../redux/todo";
 import {useDispatch} from "react-redux";
+import {getTodosThunk} from "../../../redux/todos";
 
 const TodoAdd = () => {
     const [text, setText] = useState("");
@@ -10,7 +10,7 @@ const TodoAdd = () => {
 
     const addTodo = (e: React.KeyboardEvent<HTMLInputElement>) : void => {
         if(e.key === "Enter"){
-            dispatch(create(text))
+            dispatch(getTodosThunk())
             setText("")
         }
     }

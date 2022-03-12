@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import styles from './todo.scss'
 import {getFormattedToday} from "../../../common/utils/date";
 import {useDispatch} from "react-redux";
-import {remove, toggle} from "../../../redux/todo";
 import TodoList from "@Components/todo/TodoList";
 import TodoAdd from "@Components/todo/TodoAdd";
 import FrontApi from "../../../api/FrontApi";
@@ -13,13 +12,11 @@ const Todo = () => {
     const dispatch = useDispatch();
 
     const onToggle = (id : string) => {
-        dispatch(toggle(id))
     }
 
     const onRemove = (e: React.MouseEvent, id: string) : void => {
         e.stopPropagation();
         if(isLongClick){
-            dispatch(remove(id))
         }
 
     }
@@ -27,7 +24,6 @@ const Todo = () => {
     useEffect(() => {
         const getTodos = async () => {
             const response = await FrontApi.getTodos();
-            console.log(`response ${JSON.stringify(response)}`)
         }
 
         getTodos()

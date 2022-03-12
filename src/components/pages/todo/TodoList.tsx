@@ -13,12 +13,13 @@ type TodoListProps = {
 }
 
 const TodoList = ({onToggle, onRemove, isLongClick, setIsLongClick}: TodoListProps) => {
-    const todos = useSelector((state: RootState) => state.todos, shallowEqual)
+    const {data, error, loading} = useSelector((state: RootState) => state.todo.todos, shallowEqual)
+
 
     return(
         <>
             {
-                todos.map((todo) => (
+                data && data.map((todo) => (
                     <div
                         className={styles.todoList}
                         key={todo?.id}

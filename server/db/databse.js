@@ -43,8 +43,7 @@ router.post('/', function (req, res) {
             console.log(`Result Data List \n `)
             const string = JSON.stringify(results);
             console.log(`${string}`)
-            const json = JSON.parse(string);
-            res.send({json})
+            res.send(string)
         })
         connection.release()
         console.log(`=== Mybatis Query Log End ===`)

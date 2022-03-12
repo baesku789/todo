@@ -1,4 +1,5 @@
 import axios, {AxiosInstance} from "axios";
+import {TodoState} from "../redux/todo";
 
 const axiosConfig: AxiosInstance = axios.create({
     baseURL : SERVER_DOMAIN,
@@ -7,8 +8,8 @@ const axiosConfig: AxiosInstance = axios.create({
 
 const FrontApi = {
     getTodos : async () => {
-        const response = await axiosConfig.post('/todos?type=list')
-        return response.data.json
+        const response = await axiosConfig.post<TodoState>('/todos?type=list')
+        return response.data
     }
 }
 
